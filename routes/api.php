@@ -20,13 +20,26 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('auth/login', AuthController::class . '@login');
-Route::post('auth/refresh', AuthController::class . '@refresh');
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', AuthController::class . '@login');
+    Route::post('refresh', AuthController::class . '@refresh');
+});
 
 Route::group(['middleware' => 'apiJwt'], function () {
-    Route::post('auth/logout', AuthController::class . '@logout');
-    Route::post('auth/me', AuthController::class . '@me');
-    Route::get('auth/user', AuthController::class . '@me');
+
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('logout', AuthController::class . '@logout');
+        Route::get('me', AuthController::class . '@me');
+        Route::get('user', AuthController::class . '@me');
+    });
 
     Route::get('users', UserController::class . '@index');
 });
+
+
+// Route::group(['middleware' => 'auth:api', 'prefix' => 'auth'], function ($router) {
+//     Route::post('logout', AuthController::class . '@logout');
+//     Route::get('me', AuthController::class . '@me');
+//     Route::get('user', AuthController::class . '@me');
+//     Route::get('users', UserController::class . '@index');
+// });
