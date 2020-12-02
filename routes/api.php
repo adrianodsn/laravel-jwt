@@ -26,6 +26,7 @@ Route::post('auth/refresh', AuthController::class . '@refresh');
 Route::group(['middleware' => 'apiJwt'], function () {
     Route::post('auth/logout', AuthController::class . '@logout');
     Route::post('auth/me', AuthController::class . '@me');
+    Route::get('auth/user', AuthController::class . '@me');
 
     Route::get('users', UserController::class . '@index');
 });
