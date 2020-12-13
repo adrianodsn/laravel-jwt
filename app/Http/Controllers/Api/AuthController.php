@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -41,8 +43,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(['data' => auth('api')->user()]);
-        //return response()->json(auth('api')->user());
+        return response()->json(auth('api')->user());
     }
 
     /**
@@ -80,10 +81,10 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json(['data' => [
+        return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
-        ]]);
+        ]);
     }
 }

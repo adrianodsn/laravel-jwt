@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+Route::get('/', function () {
+    return response()->json(['name' => 'Laravel JWT API', 'version' => '1.0.0']);
+});
+
+Route::post('register', UserController::class . '@store');
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', AuthController::class . '@login');
