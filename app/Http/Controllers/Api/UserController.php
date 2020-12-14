@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,9 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //return response()->json(User::all());
-        //return User::all();
-        return User::orderBy('name')->paginate(50);
+        return UserResource::collection(
+            User::orderBy('name')->paginate()
+        );
     }
 
     /**
